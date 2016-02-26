@@ -27,6 +27,8 @@ var UserTrackBox = React.createClass({
             var image = listening.image[2]["#text"];
             var album = listening.album["#text"];
             var name = listening.name;
+            var artist = listening.artist["#text"];
+            console.log(artist);
             var url = listening.url;
             if (this.isMounted()) {
                 this.setState({
@@ -35,7 +37,8 @@ var UserTrackBox = React.createClass({
                     album: album,
                     image: image,
                     url: url,
-                    name: name
+                    name: name,
+                    artist: artist
 
                 });
             }
@@ -50,7 +53,8 @@ var UserTrackBox = React.createClass({
             album: '',
             image: '',
             url: '',
-            name: ''
+            name: '',
+            artist: ''
         };
     },
     componentDidMount: function componentDidMount() {
@@ -67,7 +71,7 @@ var UserTrackBox = React.createClass({
             'div',
             { className: 'LastFmlist' },
             React.createElement(TrackList, { data: this.state.data }),
-            React.createElement(ListenTrack, { image: this.state.image, name: this.state.name, url: this.state.url, album: this.state.album }),
+            React.createElement(ListenTrack, { image: this.state.image, name: this.state.name, artist: this.state.artist, url: this.state.url, album: this.state.album }),
             React.createElement(
                 'h2',
                 null,
@@ -78,12 +82,11 @@ var UserTrackBox = React.createClass({
     Online: function Online() {
         var musicarray = this.state.data;
         musicarray.splice(-1, 1);
-        console.log(musicarray.length);
         return React.createElement(
             'div',
             { className: 'LastFmlist' },
             React.createElement(TrackList, { data: musicarray }),
-            React.createElement(ListenTrack, { image: this.state.image, name: this.state.name, url: this.state.url, album: this.state.album }),
+            React.createElement(ListenTrack, { image: this.state.image, name: this.state.name, artist: this.state.artist, url: this.state.url, album: this.state.album }),
             React.createElement(
                 'h2',
                 null,
@@ -93,8 +96,6 @@ var UserTrackBox = React.createClass({
     },
     render: function render() {
         var wrap;
-        console.log(this.state.data.length);
-        console.log(this.state.limitNumber);
         if (this.state.data.length === this.state.limitNumber) {
             return wrap = this.offLine();
         } else if (this.state.data.length > this.state.limitNumber) return wrap = this.Online();
@@ -116,12 +117,20 @@ var ListenTrack = React.createClass({
             React.createElement(
                 'p',
                 null,
+                '专辑名:',
                 this.props.album
+            ),
+            React.createElement(
+                'h2',
+                null,
+                '歌曲名:',
+                this.props.name
             ),
             React.createElement(
                 'h1',
                 null,
-                this.props.name
+                '音乐人:',
+                this.props.artist
             )
         );
     }
@@ -165,7 +174,7 @@ var Track = React.createClass({
         hide = React.createElement('img', { style: imgStyle, className: 'list', src: this.props.furl });
         return React.createElement(
             'a',
-            { ref: 'tips', href: this.props.fhref, 'data-toogle': 'tooltip', 'data-placement': 'left' },
+            { ref: 'tips', href: this.props.fhref },
             hide
         );
     }

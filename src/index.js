@@ -28,7 +28,6 @@ var UserTrackBox = React.createClass({
             var album = listening.album["#text"];
             var name = listening.name;
             var artist = listening.artist["#text"];
-            console.log(artist);
             var url = listening.url;
             if (this.isMounted()) {
                 this.setState({
@@ -110,6 +109,10 @@ var ListenTrack = React.createClass({
     displayName: 'ListenTrack',
 
     render: function render() {
+        if (this.props.image === "") {
+            var newimg = 'http://img2-ak.lst.fm/i/u/174s/e04ce91798e34c36b21a85a9fab01b40.jpg';
+            this.props.image = newimg;
+        }
         return React.createElement(
             'div',
             null,

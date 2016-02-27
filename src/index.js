@@ -69,7 +69,7 @@ var UserTrackBox = React.createClass({
       artist: this.state.data[i].artist["#text"],
       name: this.state.data[i].name,
       url: this.state.data[i].url,
-      album: this.state.data[i]["#text"],
+      album: this.state.data[i].album["#text"],
       image: this.state.data[i].image[2]["#text"]
     });
   },

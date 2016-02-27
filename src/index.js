@@ -65,7 +65,6 @@ var UserTrackBox = React.createClass({
     return true;
   },
   handleChange: function handleChange(i) {
-    console.log(this.state.data[i]);
     this.setState({
       artist: this.state.data[i].artist["#text"],
       name: this.state.data[i].name,

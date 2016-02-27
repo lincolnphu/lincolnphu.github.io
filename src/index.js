@@ -177,7 +177,7 @@ var Track = React.createClass({
   displayName: 'Track',
 
   render: function render() {
-    return React.createElement('img', { style: imgStyle, onClick: this.props.onClick, src: this.props.furl });
+    return React.createElement('img', { style: imgStyle, onMouseOver: this.props.onClick, src: this.props.furl });
   }
 });
 var Track;

@@ -64,7 +64,16 @@ var UserTrackBox = React.createClass({
   shouldComponentUpdate: function shouldComponentUpdate() {
     return true;
   },
-  handleChange: function handleChange() {},
+  handleChange: function handleChange(i) {
+    console.log(this.state.data[i]);
+    this.setState({
+      artist: this.state.data[i].artist["#text"],
+      name: this.state.data[i].name,
+      url: this.state.data[i].url,
+      album: this.state.data[i]["#text"],
+      image: this.state.data[i].image[2]["#text"]
+    });
+  },
   offLine: function offLine() {
 
     return React.createElement(
@@ -110,6 +119,10 @@ var ListenTrack = React.createClass({
   displayName: 'ListenTrack',
 
   render: function render() {
+    if (this.props.image === "") {
+      var newimg = 'http://img2-ak.lst.fm/i/u/174s/e04ce91798e34c36b21a85a9fab01b40.jpg';
+      this.props.image = newimg;
+    }
     return React.createElement(
       'div',
       null,
@@ -137,7 +150,6 @@ var ListenTrack = React.createClass({
 });
 
 function TrackList(props) {
-  console.log(props);
   return React.createElement(
     'div',
     { style: divStyle, className: 'userTrackBox' },
@@ -165,11 +177,7 @@ var Track = React.createClass({
   displayName: 'Track',
 
   render: function render() {
-    return React.createElement(
-      'a',
-      { ref: 'tips', href: this.props.fhref },
-      React.createElement('img', { style: imgStyle, className: 'list', src: this.props.furl })
-    );
+    return React.createElement('img', { style: imgStyle, onClick: this.props.onClick, src: this.props.furl });
   }
 });
 var Track;

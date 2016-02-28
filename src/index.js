@@ -1,4 +1,3 @@
-'use strict';
 
 var UserTrackBox = React.createClass({
   displayName: 'UserTrackBox',
@@ -24,10 +23,11 @@ var UserTrackBox = React.createClass({
     }).then((function (json) {
       var data = json.recenttracks.track;
       var listening = data[0];
-      var image = listening.image[2]["#text"];
+      var image = listening.image[3]["#text"];
       var album = listening.album["#text"];
       var name = listening.name;
       var artist = listening.artist["#text"];
+      console.log(listening);
       var url = listening.url;
       if (this.isMounted()) {
         this.setState({
@@ -69,8 +69,8 @@ var UserTrackBox = React.createClass({
       artist: this.state.data[i].artist["#text"],
       name: this.state.data[i].name,
       url: this.state.data[i].url,
-      album: this.state.data[i].album["#text"],
-      image: this.state.data[i].image[2]["#text"]
+      album: this.state.data[i]["#text"],
+      image: this.state.data[i].image[3]["#text"]
     });
   },
   offLine: function offLine() {
@@ -122,31 +122,49 @@ var ListenTrack = React.createClass({
       var newimg = 'http://img2-ak.lst.fm/i/u/174s/e04ce91798e34c36b21a85a9fab01b40.jpg';
       this.props.image = newimg;
     }
+    var imgUrl = this.props.image;
+    var styles = {
+      backgroundImage: 'url(' + imgUrl + ')',
+      width: '300',
+      height: '300'
+    };
+
     return React.createElement(
       'div',
       null,
-      React.createElement('img', { src: this.props.image }),
       React.createElement(
-        'p',
-        null,
-        '专辑名:',
-        this.props.album
-      ),
-      React.createElement(
-        'h2',
-        null,
-        '歌曲名:',
-        this.props.name
-      ),
-      React.createElement(
-        'h1',
-        null,
-        '音乐人:',
-        this.props.artist
+        'div',
+        { style: styles, className: 'demo-card-image mdl-card mdl-shadow--2dp' },
+        React.createElement('div', { className: 'mdl-card__title mdl-card--expand' }),
+        React.createElement(
+          'div',
+          { className: 'mdl-card__actions' },
+          React.createElement(
+            'span',
+            { className: 'demo-card-image__filename' },
+            React.createElement(
+              'p',
+              null,
+              '专辑名:',
+              this.props.album,
+              ' ',
+              React.createElement('hr', null),
+              '歌曲名:',
+              this.props.name,
+              ' ',
+              React.createElement('hr', null),
+              '音乐人:',
+              this.props.artist
+            )
+          )
+        )
       )
     );
   }
 });
+var styles = {
+  background: 'url(http://i54.tinypic.com/4zuxif.jpg)'
+};
 
 function TrackList(props) {
   return React.createElement(
@@ -179,7 +197,6 @@ var Track = React.createClass({
     return React.createElement('img', { style: imgStyle, onMouseOver: this.props.onClick, src: this.props.furl });
   }
 });
-var Track;
 var imgStyle = {
   height: '64px',
   width: '64px'
@@ -188,12 +205,10 @@ var divStyle = {
   float: 'right',
   position: 'relative',
   margin: '0',
-  top: '0',
   bottom: '0',
   width: '448px'
 };
-React.render(React.createElement(
-  'div',
-  null,
-  React.createElement(UserTrackBox, null)
-), document.getElementById('content'));
+
+
+
+React.render(React.createElement(UserTrackBox, null), document.querySelector('#container'));

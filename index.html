@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" />
-	<title>zhaizhidi</title>
-	<style>
-body {
 
-background: #16222A; /* fallback for old browsers */
+<head>
+    <title></title>
+    <style>
+body{background: #16222A; /* fallback for old browsers */
 background: -webkit-linear-gradient(to left, #16222A , #3A6073); /* Chrome 10-25, Safari 5.1-6 */
 background: linear-gradient(to left, #16222A , #3A6073); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
         
@@ -23,14 +21,29 @@ filter: alpha(opacity=60);
 line-height: 0;
 column-gap: 0px;
 }
+/**/
+.demo-card-image > .mdl-card__actions {
+  height: 150px;
+  padding: 4px;
+  background: rgba(0, 0, 0, 0.2);
+}
+.demo-card-image__filename {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+}
 
 
 	</style>
 	 <script src="http://libs.cdnjs.net/react/0.14.7/react.min.js"></script>
     <script src="http://cdn.staticfile.org/fetch/0.10.1/fetch.min.js"></script>
+    <script type="text/javascript" src="http://cdn.staticfile.org/material-design-lite/1.0.6/material.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.staticfile.org/material-design-lite/1.0.6/material.min.css">
+     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body>
- <div id="content">
+ <div id="container"></div>
+    <div id="content">
         <script  src="src/index.js"></script>
     </div>
 </body>

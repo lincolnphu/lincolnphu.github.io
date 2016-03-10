@@ -239,21 +239,33 @@ function TrackList(props) {
 var Track = React.createClass({
   displayName: 'Track',
 
-  render: function render() {
+  getInitialState: function getInitialState() {
+    return {
+      gradient: ''
+    };
+  },
+  componentDidMount: function componentDidMount() {
+    this.interval = setInterval(this.realColor, 1000);
+  },
+  componentWillMount: function componentWillMount() {
+    clearInterval(this.interval);
+  },
+  realColor: function realColor() {
     function getRandomInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1) + min);
     }
-    var gradient = getRandomInt(168, 211) + "," + getRandomInt(142, 213) + "," + getRandomInt(134, 214);
+    var gradient = getRandomInt(168, 211) + "," + getRandomInt(40, 213) + "," + getRandomInt(35, 214);
+    this.setState({ gradient: gradient });
+  },
+  render: function render() {
     var imgStyle = {
       height: '64px',
       width: '64px',
-      backgroundColor: 'rgb(' + gradient + ')'
+      backgroundColor: 'rgb(' + this.state.gradient + ')'
     };
 
     return React.createElement('img', { style: imgStyle, onMouseOver: this.props.onClick, src: this.props.furl });
   }
 });
-
-
 
 React.render(React.createElement(UserTrackBox, null), document.querySelector('#content'));

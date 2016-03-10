@@ -138,12 +138,21 @@ var ListenTrack = React.createClass({
   },
   render: function render() {
     var imgUrl = this.props.image,
-        styles = {
-      backgroundImage: 'url(' + imgUrl + ')',
-      width: '300',
-      height: '300',
-      backgroundColor: 'rgb(' + this.state.gradient + ')'
-    };
+        styles;
+    if (imgUrl == '') {
+      styles = {
+        backgroundImage: 'url(' + imgUrl + ')',
+        width: '300',
+        height: '300',
+        backgroundColor: 'rgb(' + this.state.gradient + ')'
+      };
+    } else {
+      styles = {
+        backgroundImage: 'url(' + imgUrl + ')',
+        width: '300',
+        height: '300'
+      };
+    }
     return React.createElement(
       'div',
       null,
@@ -272,13 +281,21 @@ var Track = React.createClass({
     this.setState({ gradient: gradient });
   },
   render: function render() {
-    var imgStyle = {
-      height: '64px',
-      width: '64px',
-      backgroundColor: 'rgb(' + this.state.gradient + ')'
-    };
-
+    var imgStyle;
+    if (this.props.furl == '') {
+      imgStyle = {
+        height: '64px',
+        width: '64px',
+        backgroundColor: 'rgb(' + this.state.gradient + ')'
+      };
+    } else {
+      imgStyle = {
+        height: '64px',
+        width: '64px'
+      };
+    }
     return React.createElement('img', { style: imgStyle, onMouseOver: this.props.onClick, src: this.props.furl });
   }
 });
+
 React.render(React.createElement(UserTrackBox, null), document.querySelector('#content'));

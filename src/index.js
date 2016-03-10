@@ -32,7 +32,6 @@ var UserTrackBox = React.createClass({
     fetch(url).then(function (response) {
       return response.json();
     }).then(function (json) {
-      console.log(json);
       var data = json.recenttracks.track,
           listening = data[0],
           image = listening.image[3]["#text"],
@@ -60,7 +59,6 @@ var UserTrackBox = React.createClass({
     setInterval(this.loadMusicFromServer, 60000);
   },
   handleChange: function handleChange(i) {
-    console.log(this);
     this.setState({
       artist: this.state.data[i].artist["#text"],
       name: this.state.data[i].name,
@@ -255,3 +253,7 @@ var Track = React.createClass({
     return React.createElement('img', { style: imgStyle, onMouseOver: this.props.onClick, src: this.props.furl });
   }
 });
+
+
+
+React.render(React.createElement(UserTrackBox, null), document.querySelector('#content'));

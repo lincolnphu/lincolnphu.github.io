@@ -31,7 +31,8 @@ var UserTrackBox = React.createClass({
     var url = 'https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=' + user + '&api_key=' + api + '&format=json&limit=' + limitNumber + '';
     fetch(url).then(function (response) {
       return response.json();
-    }).then((function (json) {
+    }).then(function (json) {
+      console.log(json);
       var data = json.recenttracks.track,
           listening = data[0],
           image = listening.image[3]["#text"],
@@ -50,7 +51,7 @@ var UserTrackBox = React.createClass({
           artist: artist
         });
       }
-    }).bind(this))['catch'](function (err) {
+    }.bind(this)).catch(function (err) {
       console.log('parsing failed', err);
     });
   },
@@ -59,6 +60,7 @@ var UserTrackBox = React.createClass({
     setInterval(this.loadMusicFromServer, 60000);
   },
   handleChange: function handleChange(i) {
+    console.log(this);
     this.setState({
       artist: this.state.data[i].artist["#text"],
       name: this.state.data[i].name,
@@ -119,15 +121,16 @@ var ListenTrack = React.createClass({
   displayName: 'ListenTrack',
 
   render: function render() {
-    if (this.props.image === "") {
-      var newimg = 'http://img2-ak.lst.fm/i/u/174s/e04ce91798e34c36b21a85a9fab01b40.jpg';
-      this.props.image = newimg;
+    function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1) + min);
     }
+    var gradient = getRandomInt(168, 211) + "," + getRandomInt(76, 213) + "," + getRandomInt(134, 214);
     var imgUrl = this.props.image,
         styles = {
       backgroundImage: 'url(' + imgUrl + ')',
       width: '300',
-      height: '300'
+      height: '300',
+      backgroundColor: 'rgb(' + gradient + ')'
     };
     return React.createElement(
       'div',
@@ -135,7 +138,7 @@ var ListenTrack = React.createClass({
       React.createElement(
         'div',
         { style: styles,
-          className: 'demo-card-image  mdl-card mdl-shadow--2dp' },
+          className: 'demo-card-image mdl-card mdl-shadow--2dp' },
         React.createElement('div', { className: 'mdl-card__title mdl-card--expand' }),
         React.createElement(
           'div',
@@ -157,6 +160,50 @@ var ListenTrack = React.createClass({
               '音乐人:',
               this.props.artist
             )
+          )
+        )
+      ),
+      React.createElement(
+        'button',
+        { className: 'mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent' },
+        '自我介绍'
+      ),
+      React.createElement(
+        'div',
+        null,
+        React.createElement(
+          'button',
+          { id: 'demo-menu-lower-right',
+            className: 'mdl-button mdl-js-button mdl-button--icon' },
+          React.createElement(
+            'i',
+            { className: 'material-icons' },
+            'more_vert'
+          )
+        ),
+        React.createElement(
+          'ul',
+          { className: 'mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect',
+            htmlFor: 'demo-menu-lower-right' },
+          React.createElement(
+            'li',
+            { className: 'mdl-menu__item' },
+            'Some Action'
+          ),
+          React.createElement(
+            'li',
+            { className: 'mdl-menu__item' },
+            'Another Action'
+          ),
+          React.createElement(
+            'li',
+            { disabled: true, className: 'mdl-menu__item' },
+            'Disabled Action'
+          ),
+          React.createElement(
+            'li',
+            { className: 'mdl-menu__item' },
+            'Yet Another Action'
           )
         )
       )
@@ -181,10 +228,6 @@ function TrackList(props) {
           _fname = result.name,
           _fhref = result.url;
 
-      if (_furl === "") {
-        var newimg = 'http://img2-ak.lst.fm/i/u/174s/e04ce91798e34c36b21a85a9fab01b40.jpg';
-        _furl = newimg;
-      }
       return React.createElement(Track, {
         fartist: _fartist,
         fhref: _fhref,
@@ -199,14 +242,16 @@ var Track = React.createClass({
   displayName: 'Track',
 
   render: function render() {
+    function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+    var gradient = getRandomInt(168, 211) + "," + getRandomInt(142, 213) + "," + getRandomInt(134, 214);
     var imgStyle = {
       height: '64px',
-      width: '64px'
+      width: '64px',
+      backgroundColor: 'rgb(' + gradient + ')'
     };
+
     return React.createElement('img', { style: imgStyle, onMouseOver: this.props.onClick, src: this.props.furl });
   }
 });
-
-
-
-React.render(React.createElement(UserTrackBox, null), document.querySelector('#content'));

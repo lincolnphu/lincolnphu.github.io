@@ -33,6 +33,7 @@ var UserTrackBox = React.createClass({
       var limitNumber = heightlist * widthlist,
           list = widthlist;
     }
+    console.log(list);
     var url = 'https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=' + user + '&api_key=' + api + '&format=json&limit=' + limitNumber + '';
     fetch(url).then(function (response) {
       return response.json();
@@ -79,7 +80,8 @@ var UserTrackBox = React.createClass({
       { className: 'LastFmlist' },
       React.createElement(TrackList, {
         onClick: this.handleChange,
-        data: this.state.data }),
+        data: this.state.data,
+        list: this.state.list }),
       React.createElement(ListenTrack, { image: this.state.image,
         name: this.state.name,
         artist: this.state.artist,
@@ -238,6 +240,7 @@ var ListenTrack = React.createClass({
 });
 
 function TrackList(props) {
+  console.log(props);
   var list = props.list;
   var divStyle = {
     float: 'right',
@@ -305,6 +308,5 @@ var Track = React.createClass({
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
-
 
 React.render(React.createElement(UserTrackBox, null), document.querySelector('#content'));

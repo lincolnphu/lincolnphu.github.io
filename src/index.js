@@ -11,23 +11,16 @@ var UserTrackBox = React.createClass({
       image: '',
       url: '',
       name: '',
-      artist: ''
+      artist: '',
+      weekRaw: []
     };
   },
   loadMusicFromServer: function loadMusicFromServer() {
     var user = 'lincolnphu',
         api = '6510c6b46fd1c71571bc40ee7037e1a9',
-        limitNumber = 49,
-        windowSize = window.innerWidth;
-    if (windowSize > 1465) {
-      limitNumber = 98;
-    } else if (windowSize == 1440) {
-      limitNumber = 84;
-    } else if (windowSize > 800 && windowSize < 1280) {
-      limitNumber = 84;
-    } else {
-      limitNumber = 49;
-    }
+        limitNumber = sizinumber(window.innerHeight, window.innerWidth);
+    console.log(limitNumber);
+
     var url = 'https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=' + user + '&api_key=' + api + '&format=json&limit=' + limitNumber + '';
     fetch(url).then(function (response) {
       return response.json();
@@ -52,6 +45,15 @@ var UserTrackBox = React.createClass({
       }
     }.bind(this)).catch(function (err) {
       console.log('parsing failed', err);
+    });
+  },
+  componentWillMount: function componentWillMount() {
+    this.rawWeekMusic();
+  },
+  rawWeekMusic: function rawWeekMusic() {
+    var dateFormat = d3.time.format("%m/%d/%Y");
+    d3.csv('https://ws.audioscrobbler.com/2.0/?method=user.getWeeklyAlbumChart&api_key=6510c6b46fd1c71571bc40ee7037e1a9&user=lincolnphu&format=json').row(function (d) {
+      return;
     });
   },
   componentDidMount: function componentDidMount() {
@@ -130,9 +132,7 @@ var ListenTrack = React.createClass({
     clearInterval(this.interval);
   },
   realColor: function realColor() {
-    function getRandomInt(min, max) {
-      return Math.floor(Math.random() * (max - min + 1) + min);
-    }
+
     var gradient = getRandomInt(168, 211) + "," + getRandomInt(40, 213) + "," + getRandomInt(35, 214);
     this.setState({ gradient: gradient });
   },
@@ -233,12 +233,13 @@ var ListenTrack = React.createClass({
 });
 
 function TrackList(props) {
+  var list = Math.round(innerWidth / 64 * 0.3) * 64;
   var divStyle = {
     float: 'right',
     position: 'relative',
     margin: '0',
     bottom: '0',
-    width: '448px'
+    width: list
   };
   return React.createElement(
     'div',
@@ -274,9 +275,7 @@ var Track = React.createClass({
     clearInterval(this.interval);
   },
   realColor: function realColor() {
-    function getRandomInt(min, max) {
-      return Math.floor(Math.random() * (max - min + 1) + min);
-    }
+
     var gradient = getRandomInt(168, 211) + "," + getRandomInt(40, 213) + "," + getRandomInt(35, 214);
     this.setState({ gradient: gradient });
   },
@@ -297,5 +296,16 @@ var Track = React.createClass({
     return React.createElement('img', { style: imgStyle, onMouseOver: this.props.onClick, src: this.props.furl });
   }
 });
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function sizinumber(height, Width) {
+  var example = Math.round(height * Width * 0.3 / 64 / 64),
+      heightlist = Math.round(height / 64)-1,
+      widthlist = Math.round(Width / 64 * 0.3);
+  return heightlist * widthlist;
+}
 
 React.render(React.createElement(UserTrackBox, null), document.querySelector('#content'));

@@ -33,7 +33,6 @@ var UserTrackBox = React.createClass({
       var limitNumber = heightlist * widthlist,
           list = widthlist;
     }
-    console.log(limitNumber);
     var url = 'https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=' + user + '&api_key=' + api + '&format=json&limit=' + limitNumber + '';
     fetch(url).then(function (response) {
       return response.json();
@@ -239,7 +238,6 @@ var ListenTrack = React.createClass({
 });
 
 function TrackList(props) {
-  console.log(props);
   var list = props.list;
   var divStyle = {
     float: 'right',

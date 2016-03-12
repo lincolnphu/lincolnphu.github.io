@@ -12,15 +12,28 @@ var UserTrackBox = React.createClass({
       url: '',
       name: '',
       artist: '',
-      weekRaw: []
+      weekRaw: [],
+      list: ''
     };
   },
   loadMusicFromServer: function loadMusicFromServer() {
     var user = 'lincolnphu',
         api = '6510c6b46fd1c71571bc40ee7037e1a9',
-        limitNumber = sizinumber(window.innerHeight, window.innerWidth);
+        Width = window.innerWidth,
+        height = window.innerHeight,
+        heightlist = Math.round(height / 64),
+        widthlist = Math.round(Width / 64 * 0.3);
+    if (Width < 1980) {
+      var limitNumber = heightlist * (widthlist - 2),
+          list = widthlist - 2;
+    } else if (1280 < Width < 1440) {
+      var limitNumber = heightlist * (widthlist - 1),
+          list = widthlist - 1;
+    } else {
+      var limitNumber = heightlist * widthlist,
+          list = widthlist;
+    }
     console.log(limitNumber);
-
     var url = 'https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=' + user + '&api_key=' + api + '&format=json&limit=' + limitNumber + '';
     fetch(url).then(function (response) {
       return response.json();
@@ -40,7 +53,8 @@ var UserTrackBox = React.createClass({
           image: image,
           url: url,
           name: name,
-          artist: artist
+          artist: artist,
+          list: list
         });
       }
     }.bind(this)).catch(function (err) {
@@ -87,7 +101,8 @@ var UserTrackBox = React.createClass({
       { className: 'LastFmlist' },
       React.createElement(TrackList, {
         onClick: this.handleChange,
-        data: musicarray }),
+        data: musicarray,
+        list: this.state.list }),
       React.createElement(ListenTrack, {
         image: this.state.image,
         name: this.state.name,
@@ -224,13 +239,14 @@ var ListenTrack = React.createClass({
 });
 
 function TrackList(props) {
-  var list = Math.round(innerWidth / 64 * 0.3) * 64;
+  console.log(props);
+  var list = props.list;
   var divStyle = {
     float: 'right',
     position: 'relative',
     margin: '0',
     bottom: '0',
-    width: list
+    width: list * 64
   };
   return React.createElement(
     'div',
@@ -292,11 +308,5 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function sizinumber(height, Width) {
-  var example = Math.round(height * Width * 0.3 / 64 / 64),
-      heightlist = Math.round(height / 64) ,
-      widthlist = Math.round(Width / 64 * 0.3);
-  return heightlist * widthlist;
-}
 
 React.render(React.createElement(UserTrackBox, null), document.querySelector('#content'));

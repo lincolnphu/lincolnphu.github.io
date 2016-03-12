@@ -294,7 +294,7 @@ function getRandomInt(min, max) {
 
 function sizinumber(height, Width) {
   var example = Math.round(height * Width * 0.3 / 64 / 64),
-      heightlist = Math.round(height / 64) - 1,
+      heightlist = Math.round(height / 64) ,
       widthlist = Math.round(Width / 64 * 0.3);
   return heightlist * widthlist;
 }

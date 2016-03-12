@@ -47,15 +47,6 @@ var UserTrackBox = React.createClass({
       console.log('parsing failed', err);
     });
   },
-  componentWillMount: function componentWillMount() {
-    this.rawWeekMusic();
-  },
-  rawWeekMusic: function rawWeekMusic() {
-    var dateFormat = d3.time.format("%m/%d/%Y");
-    d3.csv('https://ws.audioscrobbler.com/2.0/?method=user.getWeeklyAlbumChart&api_key=6510c6b46fd1c71571bc40ee7037e1a9&user=lincolnphu&format=json').row(function (d) {
-      return;
-    });
-  },
   componentDidMount: function componentDidMount() {
     this.loadMusicFromServer();
     setInterval(this.loadMusicFromServer, 60000);
@@ -303,7 +294,7 @@ function getRandomInt(min, max) {
 
 function sizinumber(height, Width) {
   var example = Math.round(height * Width * 0.3 / 64 / 64),
-      heightlist = Math.round(height / 64)-1,
+      heightlist = Math.round(height / 64) - 1,
       widthlist = Math.round(Width / 64 * 0.3);
   return heightlist * widthlist;
 }

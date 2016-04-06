@@ -1,310 +1,109 @@
-'use strict';
+var SetIntervalMixin = {
+		componentWillMount: function () {
+				this.intervals = [];
+		},
+		setInterval: function () {
+				this.intervals.push(setInterval.apply(null, arguments));
+		},
+		componentWillUnmount: function () {
+				this.intervals.map(clearInterval);
+		}
+};
 
-var UserTrackBox = React.createClass({
-  displayName: 'UserTrackBox',
+var Animation = React.createClass({
+		displayName: "Animation",
 
-  getInitialState: function getInitialState() {
-    return {
-      data: [],
-      limitNumber: '',
-      album: '',
-      image: '',
-      url: '',
-      name: '',
-      artist: '',
-      weekRaw: [],
-      list: ''
-    };
-  },
-  loadMusicFromServer: function loadMusicFromServer() {
-    var user = 'lincolnphu',
-        api = '6510c6b46fd1c71571bc40ee7037e1a9',
-        Width = window.innerWidth,
-        height = window.innerHeight,
-        heightlist = Math.round(height / 64),
-        widthlist = Math.round(Width / 64 * 0.3);
-    if (Width < 1980) {
-      var limitNumber = heightlist * (widthlist - 2),
-          list = widthlist - 2;
-    } else if (1280 < Width < 1440) {
-      var limitNumber = heightlist * (widthlist - 1),
-          list = widthlist - 1;
-    } else {
-      var limitNumber = heightlist * widthlist,
-          list = widthlist;
-    }
-    var url = 'https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=' + user + '&api_key=' + api + '&format=json&limit=' + limitNumber + '';
-    fetch(url).then(function (response) {
-      return response.json();
-    }).then(function (json) {
-      var data = json.recenttracks.track,
-          listening = data[0],
-          image = listening.image[3]["#text"],
-          album = listening.album["#text"],
-          name = listening.name,
-          artist = listening.artist["#text"],
-          url = listening.url;
-      if (this.isMounted()) {
-        this.setState({
-          data: data,
-          limitNumber: limitNumber,
-          album: album,
-          image: image,
-          url: url,
-          name: name,
-          artist: artist,
-          list: list
-        });
-      }
-    }.bind(this)).catch(function (err) {
-      console.log('parsing failed', err);
-    });
-  },
-  componentDidMount: function componentDidMount() {
-    this.loadMusicFromServer();
-    setInterval(this.loadMusicFromServer, 60000);
-  },
-  handleChange: function handleChange(i) {
-    this.setState({
-      artist: this.state.data[i].artist["#text"],
-      name: this.state.data[i].name,
-      url: this.state.data[i].url,
-      album: this.state.data[i]["#text"],
-      image: this.state.data[i].image[3]["#text"]
-    });
-  },
-  offLine: function offLine() {
-    return React.createElement(
-      'div',
-      { className: 'LastFmlist' },
-      React.createElement(TrackList, {
-        onClick: this.handleChange,
-        data: this.state.data,
-        list: this.state.list }),
-      React.createElement(ListenTrack, { image: this.state.image,
-        name: this.state.name,
-        artist: this.state.artist,
-        url: this.state.url,
-        album: this.state.album })
-    );
-  },
-  Online: function Online() {
-    var tipsDiv = React.createElement(
-      'div',
-      { ref: 'tips', id: 'tt1', className: 'icon material-icons' },
-      'add'
-    ),
-        musicarray = this.state.data;
-    musicarray.splice(-1, 1);
-    return React.createElement(
-      'div',
-      { className: 'LastFmlist' },
-      React.createElement(TrackList, {
-        onClick: this.handleChange,
-        data: musicarray,
-        list: this.state.list }),
-      React.createElement(ListenTrack, {
-        image: this.state.image,
-        name: this.state.name,
-        artist: this.state.artist,
-        url: this.state.url,
-        album: this.state.album })
-    );
-  },
-  render: function render() {
-    var wrap;
-    if (this.state.data.length === this.state.limitNumber) {
-      return wrap = this.offLine();
-    } else if (this.state.data.length > this.state.limitNumber) return wrap = this.Online();
-    return React.createElement(
-      'div',
-      null,
-      wrap
-    );
-  }
-});
-var ListenTrack = React.createClass({
-  displayName: 'ListenTrack',
 
-  getInitialState: function getInitialState() {
-    return {
-      gradient: ''
-    };
-  },
-  componentDidMount: function componentDidMount() {
-    this.interval = setInterval(this.realColor, 1000);
-  },
-  componentWillMount: function componentWillMount() {
-    clearInterval(this.interval);
-  },
-  realColor: function realColor() {
+		getInitialState: function () {
+				return {
+						tops: tops
+				};
+		},
 
-    var gradient = getRandomInt(168, 211) + "," + getRandomInt(40, 213) + "," + getRandomInt(35, 214);
-    this.setState({ gradient: gradient });
-  },
-  render: function render() {
-    var imgUrl = this.props.image,
-        styles;
-    if (imgUrl == '') {
-      styles = {
-        backgroundImage: 'url(' + imgUrl + ')',
-        width: '300',
-        height: '300',
-        backgroundColor: 'rgb(' + this.state.gradient + ')'
-      };
-    } else {
-      styles = {
-        backgroundImage: 'url(' + imgUrl + ')',
-        width: '300',
-        height: '300'
-      };
-    }
-    return React.createElement(
-      'div',
-      null,
-      React.createElement(
-        'div',
-        { style: styles,
-          className: 'demo-card-image mdl-card mdl-shadow--2dp' },
-        React.createElement('div', { className: 'mdl-card__title mdl-card--expand' }),
-        React.createElement(
-          'div',
-          { className: 'mdl-card__actions' },
-          React.createElement(
-            'span',
-            { className: 'demo-card-image__filename' },
-            React.createElement(
-              'p',
-              null,
-              '专辑名:',
-              this.props.album,
-              ' ',
-              React.createElement('hr', null),
-              '歌曲名:',
-              this.props.name,
-              ' ',
-              React.createElement('hr', null),
-              '音乐人:',
-              this.props.artist
-            )
-          )
-        )
-      ),
-      React.createElement(
-        'button',
-        { className: 'mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent' },
-        '自我介绍'
-      ),
-      React.createElement(
-        'div',
-        null,
-        React.createElement(
-          'button',
-          { id: 'demo-menu-lower-right',
-            className: 'mdl-button mdl-js-button mdl-button--icon' },
-          React.createElement(
-            'i',
-            { className: 'material-icons' },
-            'more_vert'
-          )
-        ),
-        React.createElement(
-          'ul',
-          { className: 'mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect',
-            htmlFor: 'demo-menu-lower-right' },
-          React.createElement(
-            'li',
-            { className: 'mdl-menu__item' },
-            'Some Action'
-          ),
-          React.createElement(
-            'li',
-            { className: 'mdl-menu__item' },
-            'Another Action'
-          ),
-          React.createElement(
-            'li',
-            { disabled: true, className: 'mdl-menu__item' },
-            'Disabled Action'
-          ),
-          React.createElement(
-            'li',
-            { className: 'mdl-menu__item' },
-            'Yet Another Action'
-          )
-        )
-      )
-    );
-  }
+		render: function () {
+				var tracks = this.state.tops.toptracks.track;
+
+				var data = Object.keys(tracks).map(function (key) {
+						return tracks[key].playcount;
+				});
+				var margin = { top: 20, right: 20, bottom: 20, left: 20 },
+				    width = 400 - margin.left - margin.right,
+				    height = width - margin.top - margin.bottom;
+				var gtransform = "translate(" + (width / 2 + margin.left) + "," + (height / 2 + margin.top) + ")";
+
+				var colors = ['#4DB6AC', '#4DD0E1', '#4FC3F7', '#64B5F6', '#7986CB', '#81C784', '#90A4AE', '#9575CD', '#A1887F', '#AED581', '#BA68C8', '#DCE775', '#E0E0E0', '#E57373', '#F06292', '#FF8A65', '#FFB74D', '#FFD54F', '#FFF176'];
+
+				var pie = d3.layout.pie().sort(null).startAngle(1.1 * Math.PI).endAngle(3.1 * Math.PI).value(function (d) {
+						return d;
+				});
+				var paths = data.map(function (d, i) {
+						var styles = {
+								fill: colors[Math.floor(Math.random() * colors.length)],
+								stroke: 'white',
+								strokeWidth: "2px"
+						};
+
+						var d = pie(data)[i];
+						return React.createElement(Path, { width: width, height: height, styles: styles, d: d });
+				}.bind(this));
+				return React.createElement(
+						"svg",
+						{ width: width + margin.left + margin.right,
+								height: height + margin.top + margin.bottom },
+						React.createElement(
+								"g",
+								{ transform: gtransform },
+								paths
+						)
+				);
+		}
 });
 
-function TrackList(props) {
-  var list = props.list;
-  var divStyle = {
-    float: 'right',
-    position: 'relative',
-    margin: '0',
-    bottom: '0',
-    width: list * 64
-  };
-  return React.createElement(
-    'div',
-    { style: divStyle, className: 'userTrackBox' },
-    props.data.map(function (result, i) {
-      var _furl = result.image[1]["#text"],
-          _fartist = result.artist["#text"],
-          _fname = result.name,
-          _fhref = result.url;
+var Path = React.createClass({
+		displayName: "Path",
 
-      return React.createElement(Track, {
-        fartist: _fartist,
-        fhref: _fhref,
-        fname: _fname,
-        furl: _furl,
-        key: i,
-        onClick: props.onClick.bind(this, i, props) });
-    })
-  );
-}
-var Track = React.createClass({
-  displayName: 'Track',
+		getInitialState() {
+				return {
+						milliseconds: 0
+				};
+		},
+		mixins: [SetIntervalMixin],
+		componentWillReceiveProps: function (nextProps) {
+				this.setState({ milliseconds: 0 });
+		},
 
-  getInitialState: function getInitialState() {
-    return {
-      gradient: ''
-    };
-  },
-  componentDidMount: function componentDidMount() {
-    this.interval = setInterval(this.realColor, 1000);
-  },
-  componentWillMount: function componentWillMount() {
-    clearInterval(this.interval);
-  },
-  realColor: function realColor() {
+		componentDidMount: function () {
+				this.setInterval(this.tick, 30);
+		},
 
-    var gradient = getRandomInt(168, 211) + "," + getRandomInt(40, 213) + "," + getRandomInt(35, 214);
-    this.setState({ gradient: gradient });
-  },
-  render: function render() {
-    var imgStyle;
-    if (this.props.furl == '') {
-      imgStyle = {
-        height: '64px',
-        width: '64px',
-        backgroundColor: 'rgb(' + this.state.gradient + ')'
-      };
-    } else {
-      imgStyle = {
-        height: '64px',
-        width: '64px'
-      };
-    }
-    return React.createElement('img', { style: imgStyle, onMouseOver: this.props.onClick, src: this.props.furl });
-  }
+		tick: function (start) {
+				this.setState({ milliseconds: this.state.milliseconds + 10 });
+		},
+		render: function () {
+
+				var radius = Math.min(this.props.width, this.props.height) / 2;
+				var easyeasy = d3.ease('back-out');
+
+				var arc = d3.svg.arc().outerRadius(radius).innerRadius(radius - 20);
+				var t = easyeasy(Math.min(1, this.state.milliseconds / 500));
+				var i = d3.interpolate({ startAngle: 1.1 * Math.PI, endAngle: 1.1 * Math.PI }, this.props.d);
+				return React.createElement("path", { style: this.props.styles, d: arc(i(t)) });
+		}
 });
 
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
+var Guardin = React.createClass({
+		displayName: "Guardin",
 
-React.render(React.createElement(UserTrackBox, null), document.querySelector('#content'));
+		render: function () {
+				return React.createElement(
+						"div",
+						null,
+						React.createElement(Animation, null),
+						React.createElement(Animation, null),
+						React.createElement(Animation, null),
+						React.createElement(Animation, null)
+				);
+		}
+});
+
+ReactDOM.render(React.createElement(Guardin, null), document.getElementById('root'));

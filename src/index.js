@@ -106,4 +106,4 @@ var Guardin = React.createClass({
 		}
 });
 
-ReactDOM.render(React.createElement(Guardin, null), document.getElementById('root'));
+React.render(React.createElement(Guardin, null), document.getElementById('root'));

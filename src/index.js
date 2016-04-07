@@ -11,15 +11,27 @@ var SetIntervalMixin = {
 };
 
 var Animation = React.createClass({
-		displayName: "Animation",
+		displayName: 'Animation',
 
 
 		getInitialState: function () {
 				return {
-						tops: tops
+						tops: tops,
+						topInfo: [],
+						i: '',
+						number: '',
+						milliseconds: 0
 				};
 		},
-
+		handleChange: function (i) {
+				var topInfo = this.state.tops.toptracks.track[i];
+				var number = topInfo.playcount + '次';
+				this.setState({
+						topInfo: topInfo,
+						i: i,
+						number: number
+				});
+		},
 		render: function () {
 				var tracks = this.state.tops.toptracks.track;
 
@@ -44,23 +56,37 @@ var Animation = React.createClass({
 						};
 
 						var d = pie(data)[i];
-						return React.createElement(Path, { width: width, height: height, styles: styles, d: d });
+						return React.createElement(Path, { width: width, height: height, handleChange: this.handleChange.bind(this, i), styles: styles, d: d });
 				}.bind(this));
+
+				var gtransform = 'translate(' + width / 2 + ',' + height / 2 + ')';
+				var imgs = this.state.topInfo.image;
+				var ttransfrom = "translate(-110,4)";
 				return React.createElement(
-						"svg",
+						'svg',
 						{ width: width + margin.left + margin.right,
 								height: height + margin.top + margin.bottom },
 						React.createElement(
-								"g",
+								'g',
 								{ transform: gtransform },
-								paths
+								paths,
+								React.createElement(
+										'text',
+										{ transform: ttransfrom },
+										this.state.topInfo.name
+								),
+								React.createElement(
+										'text',
+										{ transform: 'translate(-50,40)' },
+										this.state.number
+								)
 						)
 				);
 		}
 });
 
 var Path = React.createClass({
-		displayName: "Path",
+		displayName: 'Path',
 
 		getInitialState() {
 				return {
@@ -87,16 +113,16 @@ var Path = React.createClass({
 				var arc = d3.svg.arc().outerRadius(radius).innerRadius(radius - 20);
 				var t = easyeasy(Math.min(1, this.state.milliseconds / 500));
 				var i = d3.interpolate({ startAngle: 1.1 * Math.PI, endAngle: 1.1 * Math.PI }, this.props.d);
-				return React.createElement("path", { style: this.props.styles, d: arc(i(t)) });
+				return React.createElement('path', { style: this.props.styles, onClick: this.props.handleChange.bind(this, i), d: arc(i(t)) });
 		}
 });
 
 var Guardin = React.createClass({
-		displayName: "Guardin",
+		displayName: 'Guardin',
 
 		render: function () {
 				return React.createElement(
-						"div",
+						'div',
 						null,
 						React.createElement(Animation, null),
 						React.createElement(Animation, null),

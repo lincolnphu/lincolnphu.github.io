@@ -1,135 +1,90 @@
-var SetIntervalMixin = {
-		componentWillMount: function () {
-				this.intervals = [];
-		},
-		setInterval: function () {
-				this.intervals.push(setInterval.apply(null, arguments));
-		},
-		componentWillUnmount: function () {
-				this.intervals.map(clearInterval);
-		}
-};
+var FetchImg = React.createClass({
+  getInitialState: function() {
+    return {
+      name:'lincolnphu',
+      url:'https://ws.audioscrobbler.com/2.0/?method=',
+      api:'6510c6b46fd1c71571bc40ee7037e1a9',
+      fetchnumber:'20',
+      tracks:[],
+      page:1,
+    };
+  },
+  componentDidMount: function() {
+    this.fetchData()
+    window.addEventListener('scroll', this.refresh);
+  },
+  componentWillMount: function() {
+        window.removeEventListener('scroll', this.refresh);
+  },
+  fetchData:function(){
+    var {name,url,api,fetchnumber,page} = this.state;
+    var fetchUrl = url+'user.getrecenttracks'+'&user='+name+'&api_key='+api+'&format=json&limit='+fetchnumber
+    fetch(fetchUrl)
+      .then(function(response){
+        return response.json()
+      }).then(function(json){
+        var tracks = json.recenttracks.track
+        this.setState({
+          tracks:tracks
+        })
+      }.bind(this))
+  },
+  pushData:function(){
 
-var Animation = React.createClass({
-		displayName: 'Animation',
+  },
+  refresh:function(e){
+   if ((window.innerHeight + window.scrollY) == (document.body.offsetHeight)){
+  var {name,url,api,tracks,fetchnumber,page} = this.state;
+  var page = this.state.page+1
+  var fetchUrl = url+'user.getrecenttracks'+'&user='+name+'&api_key='+api+'&format=json&limit=3'+'&page='+page
+  fetch(fetchUrl)
+    .then(function(response){
+      return response.json()
+    }).then(function(json){
+      var newf = json.recenttracks.track
+      var newtracks = tracks.concat(newf)
+      this.setState({
+        tracks:newtracks,
+        page:page
+      })
+    }.bind(this))
+}
+  },
+  render:function(){
+    var {tracks} = this.state;
+    var topTrack = tracks
+    return(
+      <div className="grd">
+      <Info tracks={tracks}/>
+      <div onScroll={this.refresh}></div>
+      </div>
+    )
+  }
+})
 
+var Info = React.createClass({
+  render:function(){
+    var {tracks} = this.props;
+    var examples = tracks.map(function(d,i){
+      var name  = d.artist.name;
+      var image = d.image["1"]["#text"];
+      if (image === '' ){
+        image = 'http://cdns2.freepik.com/free-photo/_318-10795.jpg'
 
-		getInitialState: function () {
-				return {
-						tops: tops,
-						topInfo: [],
-						i: '',
-						number: '',
-						milliseconds: 0
-				};
-		},
-		handleChange: function (i) {
-				var topInfo = this.state.tops.toptracks.track[i];
-				var number = topInfo.playcount + '次';
-				this.setState({
-						topInfo: topInfo,
-						i: i,
-						number: number
-				});
-		},
-		render: function () {
-				var tracks = this.state.tops.toptracks.track;
+      }
+      console.log(image)
+      return (
+        <div className="col-12"  key={i} >
+        <img  src={image} width="64" height="64" />
+        </div>
+      )
+    })
+    return (
+      <div className="grd-row">
+      {examples}
+      </div>
+    )
+  }
+})
 
-				var data = Object.keys(tracks).map(function (key) {
-						return tracks[key].playcount;
-				});
-				var margin = { top: 20, right: 20, bottom: 20, left: 20 },
-				    width = 400 - margin.left - margin.right,
-				    height = width - margin.top - margin.bottom;
-				var gtransform = "translate(" + (width / 2 + margin.left) + "," + (height / 2 + margin.top) + ")";
-
-				var colors = ['#4DB6AC', '#4DD0E1', '#4FC3F7', '#64B5F6', '#7986CB', '#81C784', '#90A4AE', '#9575CD', '#A1887F', '#AED581', '#BA68C8', '#DCE775', '#E0E0E0', '#E57373', '#F06292', '#FF8A65', '#FFB74D', '#FFD54F', '#FFF176'];
-
-				var pie = d3.layout.pie().sort(null).startAngle(1.1 * Math.PI).endAngle(3.1 * Math.PI).value(function (d) {
-						return d;
-				});
-				var paths = data.map(function (d, i) {
-						var styles = {
-								fill: colors[Math.floor(Math.random() * colors.length)],
-								stroke: 'white',
-								strokeWidth: "2px"
-						};
-
-						var d = pie(data)[i];
-						return React.createElement(Path, { width: width, height: height, handleChange: this.handleChange.bind(this, i), styles: styles, d: d });
-				}.bind(this));
-
-				var gtransform = 'translate(' + width / 2 + ',' + height / 2 + ')';
-				var imgs = this.state.topInfo.image;
-				var ttransfrom = "translate(-110,4)";
-				return React.createElement(
-						'svg',
-						{ width: width + margin.left + margin.right,
-								height: height + margin.top + margin.bottom },
-						React.createElement(
-								'g',
-								{ transform: gtransform },
-								paths,
-								React.createElement(
-										'text',
-										{ transform: ttransfrom },
-										this.state.topInfo.name
-								),
-								React.createElement(
-										'text',
-										{ transform: 'translate(-50,40)' },
-										this.state.number
-								)
-						)
-				);
-		}
-});
-
-var Path = React.createClass({
-		displayName: 'Path',
-
-		getInitialState() {
-				return {
-						milliseconds: 0
-				};
-		},
-		mixins: [SetIntervalMixin],
-		componentWillReceiveProps: function (nextProps) {
-				this.setState({ milliseconds: 0 });
-		},
-
-		componentDidMount: function () {
-				this.setInterval(this.tick, 30);
-		},
-
-		tick: function (start) {
-				this.setState({ milliseconds: this.state.milliseconds + 10 });
-		},
-		render: function () {
-
-				var radius = Math.min(this.props.width, this.props.height) / 2;
-				var easyeasy = d3.ease('back-out');
-
-				var arc = d3.svg.arc().outerRadius(radius).innerRadius(radius - 20);
-				var t = easyeasy(Math.min(1, this.state.milliseconds / 500));
-				var i = d3.interpolate({ startAngle: 1.1 * Math.PI, endAngle: 1.1 * Math.PI }, this.props.d);
-				return React.createElement('path', { style: this.props.styles, onClick: this.props.handleChange.bind(this, i), d: arc(i(t)) });
-		}
-});
-
-var Guardin = React.createClass({
-		displayName: 'Guardin',
-
-		render: function () {
-				return React.createElement(
-						'div',
-						null,
-						React.createElement(Animation, null),
-						React.createElement(Animation, null),
-						React.createElement(Animation, null),
-						React.createElement(Animation, null)
-				);
-		}
-});
-
-React.render(React.createElement(Guardin, null), document.getElementById('root'));
+ReactDOM.render(<FetchImg/>,document.getElementById('root'));

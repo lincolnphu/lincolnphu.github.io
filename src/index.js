@@ -1,7 +1,9 @@
+'use strict';
+
 var FetchImg = React.createClass({
   displayName: 'FetchImg',
 
-  getInitialState: function () {
+  getInitialState: function getInitialState() {
     return {
       name: 'lincolnphu',
       url: 'https://ws.audioscrobbler.com/2.0/?method=',
@@ -11,15 +13,21 @@ var FetchImg = React.createClass({
       page: 1
     };
   },
-  componentDidMount: function () {
+  componentDidMount: function componentDidMount() {
     this.fetchData();
     window.addEventListener('scroll', this.refresh);
   },
-  componentWillMount: function () {
+  componentWillMount: function componentWillMount() {
     window.removeEventListener('scroll', this.refresh);
   },
-  fetchData: function () {
-    var { name, url, api, fetchnumber, page } = this.state;
+  fetchData: function fetchData() {
+    var _state = this.state;
+    var name = _state.name;
+    var url = _state.url;
+    var api = _state.api;
+    var fetchnumber = _state.fetchnumber;
+    var page = _state.page;
+
     var fetchUrl = url + 'user.getrecenttracks' + '&user=' + name + '&api_key=' + api + '&format=json&limit=' + fetchnumber;
     fetch(fetchUrl).then(function (response) {
       return response.json();
@@ -30,10 +38,17 @@ var FetchImg = React.createClass({
       });
     }.bind(this));
   },
-  pushData: function () {},
-  refresh: function (e) {
-    if (window.innerHeight + window.scrollY == document.body.offsetHeight) {
-      var { name, url, api, tracks, fetchnumber, page } = this.state;
+  pushData: function pushData() {},
+  refresh: function refresh(e) {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+      var _state2 = this.state;
+      var name = _state2.name;
+      var url = _state2.url;
+      var api = _state2.api;
+      var tracks = _state2.tracks;
+      var fetchnumber = _state2.fetchnumber;
+      var page = _state2.page;
+
       var page = this.state.page + 1;
       var fetchUrl = url + 'user.getrecenttracks' + '&user=' + name + '&api_key=' + api + '&format=json&limit=3' + '&page=' + page;
       fetch(fetchUrl).then(function (response) {
@@ -48,8 +63,9 @@ var FetchImg = React.createClass({
       }.bind(this));
     }
   },
-  render: function () {
-    var { tracks } = this.state;
+  render: function render() {
+    var tracks = this.state.tracks;
+
     var topTrack = tracks;
     return React.createElement(
       'div',
@@ -63,19 +79,30 @@ var FetchImg = React.createClass({
 var Info = React.createClass({
   displayName: 'Info',
 
-  render: function () {
-    var { tracks } = this.props;
+  render: function render() {
+    var tracks = this.props.tracks;
+
+    console.log("总数 :" + tracks.length);
     var examples = tracks.map(function (d, i) {
-      var name = d.artist.name;
+      var name = d.artist["#text"];
       var image = d.image["1"]["#text"];
       if (image === '') {
         image = 'http://cdns2.freepik.com/free-photo/_318-10795.jpg';
       }
-      console.log(image);
       return React.createElement(
         'div',
         { className: 'col-12', key: i },
-        React.createElement('img', { src: image, width: '64', height: '64' })
+        React.createElement('img', { src: image, width: '64', height: '64' }),
+        React.createElement(
+          'p',
+          null,
+          d.name
+        ),
+        React.createElement(
+          'h3',
+          null,
+          name
+        )
       );
     });
     return React.createElement(
@@ -87,3 +114,4 @@ var Info = React.createClass({
 });
 
 React.render(React.createElement(FetchImg, null), document.getElementById('root'));
+

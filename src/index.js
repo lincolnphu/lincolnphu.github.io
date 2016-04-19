@@ -38,7 +38,7 @@ var FetchImg = React.createClass({
       });
     }.bind(this));
   },
-  pushData: function pushData() {},
+
   refresh: function refresh(e) {
     if (window.innerHeight + window.scrollY === document.body.scrollHeight) {
       var _state2 = this.state;
@@ -89,6 +89,7 @@ var Info = React.createClass({
       if (image === '') {
         image = 'http://cdns2.freepik.com/free-photo/_318-10795.jpg';
       }
+
       return React.createElement(
         'div',
         { className: 'col-12', key: i },
@@ -114,4 +115,3 @@ var Info = React.createClass({
 });
 
 React.render(React.createElement(FetchImg, null), document.getElementById('root'));
-

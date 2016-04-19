@@ -40,7 +40,7 @@ var FetchImg = React.createClass({
   },
   pushData: function pushData() {},
   refresh: function refresh(e) {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+    if (window.innerHeight + window.scrollY === document.body.scrollHeight) {
       var _state2 = this.state;
       var name = _state2.name;
       var url = _state2.url;

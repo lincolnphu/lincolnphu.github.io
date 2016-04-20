@@ -40,7 +40,10 @@ var FetchImg = React.createClass({
   },
 
   refresh: function refresh(e) {
-    if (window.innerHeight + window.scrollY === document.body.scrollHeight) {
+    console.log((window.innerHeight + window.scrollY) >= (e.target.body.scrollHeight-10))
+    console.log(window.innerHeight + window.scrollY)
+    console.log(e.target.body.scrollHeight )
+    if ((window.innerHeight + window.scrollY) >= (e.target.body.scrollHeight-10)) {
       var _state2 = this.state;
       var name = _state2.name;
       var url = _state2.url;

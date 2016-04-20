@@ -8,7 +8,7 @@ var FetchImg = React.createClass({
       name: 'lincolnphu',
       url: 'https://ws.audioscrobbler.com/2.0/?method=',
       api: '6510c6b46fd1c71571bc40ee7037e1a9',
-      fetchnumber: '5',
+      fetchnumber: '6',
       tracks: [],
       page: 1
     };

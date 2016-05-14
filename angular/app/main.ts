@@ -1,9 +1,5 @@
 import { bootstrap } from '@angular/platform-browser-dynamic';
 
-import { filterChart } from './app.component';
-import {enableProdMode} from '@angular/core';
+import { AppComponent } from './app.component';
 
-enableProdMode()
-
-
-bootstrap(filterChart);
+bootstrap(AppComponent);

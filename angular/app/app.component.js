@@ -9,9 +9,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-core_1.enableProdMode();
-var filterChart = (function () {
-    function filterChart() {
+var AppComponent = (function () {
+    function AppComponent() {
         var _this = this;
         this.margin = { top: 30, right: 20, bottom: 30, left: 50 };
         this.width = 600 - this.margin.left - this.margin.right;
@@ -22,10 +21,10 @@ var filterChart = (function () {
         this.valueline = d3.line().x(function (d) { return _this.x(d.date); }).y(function (d) { return _this.y(d.close); });
         this.url = 'https://raw.githubusercontent.com/lincolnphu/React-W3school-Example.github.io/master/data.csv';
     }
-    filterChart.prototype.ngOnInit = function () {
+    AppComponent.prototype.ngOnInit = function () {
         this.getDatas();
     };
-    filterChart.prototype.getDatas = function () {
+    AppComponent.prototype.getDatas = function () {
         var _this = this;
         var _a = this, parseDate = _a.parseDate, x = _a.x, y = _a.y, valueline = _a.valueline, height = _a.height, width = _a.width;
         d3.csv(this.url, function (data) {
@@ -68,15 +67,15 @@ var filterChart = (function () {
             });
         });
     };
-    filterChart = __decorate([
+    AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
             template: "\n  <svg [attr.width]=\"width + margin.left + margin.right\"\n  [attr.height]=\"height + margin.top + margin.bottom\">\n  <g [attr.transform]=\"'translate(' + margin.left + ',' + margin.top + ')'\" >\n    <path class=\"line\" [attr.d]=\"linedata\" ></path>\n      <circle  *ngFor=\"let item of filterStyle\" [attr.r]=\"item.r\" [attr.cx]=\"item.cx\"\n      [attr.cy]=\"item.cy\" [attr.fill]=\"item.fill\"></circle>\n    <g class=\"x axis\"   [attr.transform]=\"'translate(' + 0 + ',' + height + ')'\" >\n    <g class=\"tick\" *ngFor=\" let item of xScale\" [attr.transform]=\"item.xdata\"  style=\"opacity: 1\">\n      <line x2=\"0\" y2=\"6\"/>\n        <text dy=\".71em\" y=\"9\" x=\"0\" style=\"text-anchor: middle;\">{{item.xd}}</text>\n      </g>\n    <path class=\"domain\" d=\"M0,6V0H530V6\"></path>\n      </g>\n    <g class=\"y axis\">\n  <g class=\"tick\" *ngFor=\"let item of yScale\" [attr.transform]=\"item.ydata\" style=\"opacity: 1;\" >\n        <line x2=\"-6\" y2=\"0\"></line>\n        <text dy=\".32em\" x=\"-9\" y=\"0\" style=\"text-anchor: end;\">{{item.yd}}</text>\n  </g>\n  <path class=\"domain\" d=\"M-6,0H0V210H-6\"></path>\n  </g>\n  </g>\n  </svg>\n  ",
             styles: ["\n  body { font: 12px Arial;}\n\n  path {\n    stroke: steelblue;\n    stroke-width: 2;\n    fill: none;\n}\n\n.axis path,\n.axis line {\n    fill: none;\n    stroke: grey;\n    stroke-width: 1;\n    shape-rendering: crispEdges;\n  "]
         }), 
         __metadata('design:paramtypes', [])
-    ], filterChart);
-    return filterChart;
+    ], AppComponent);
+    return AppComponent;
 }());
-exports.filterChart = filterChart;
+exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map

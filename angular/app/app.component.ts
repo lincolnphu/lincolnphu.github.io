@@ -1,10 +1,8 @@
-import { Component,enableProdMode,OnInit} from '@angular/core';
+import { Component ,OnInit} from '@angular/core';
 declare var d3 ;
 
 
 
-
-enableProdMode()
 
 
 
@@ -53,7 +51,7 @@ enableProdMode()
   `]
 })
 
-export class filterChart implements OnInit {
+export class AppComponent implements OnInit {
     public  margin = {top:30,right:20,bottom:30,left:50};
     public  width = 600 - this.margin.left - this.margin.right;
     public  height = 270 - this.margin.top - this.margin.bottom;

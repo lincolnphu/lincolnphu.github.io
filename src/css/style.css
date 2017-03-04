@@ -1,0 +1,7 @@
+body {
+  color: #fff;
+  background: #000 url('~/src/css/bg.jpg') no-repeat center center;
+  background-attachment: fixed;
+  background-size: cover;
+  font: 300 18px/22px "Raleway", sans-serif;
+}

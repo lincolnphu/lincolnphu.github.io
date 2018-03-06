@@ -19,7 +19,8 @@
                varifiedBoot: Device state
                varifiedBoot: dm-verity
                varifiedBoot: OEM key
-
+               
+               varifiedBoot-->device
                root --> su
                device --> recovery
                device --> bootloader
@@ -40,7 +41,7 @@
                adb-->shell
 
                su-->User
-               User<-->group
+               group<-->User
 
                root-->device
                root-->su

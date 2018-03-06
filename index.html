@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+          <meta charset="utf-8">
+    </head>
+    <body>
+          <div class="mermaid">
+              classDiagram
+              SuperSu <|-- root : privilege
+               daemonsu o--> Supolicy
+               su -- daemonsu
+               GooglePlay<-->SafetyNet: Market restrict(市场限制 E.G: Netflix )
+               varifiedBoot<-->AndroidKernel
+               AndroidDriver--AndroidKernel
+               AndroidKernel: 数据完整性
+               SuperSu : AndroidVersion: 7
+               SuperSu : AndroidVersion: 4.4
+               varifiedBoot: Boot state
+               varifiedBoot: Device state
+               varifiedBoot: dm-verity
+               varifiedBoot: OEM key
+
+               root --> su
+               device --> recovery
+               device --> bootloader
+               device --> debug
+               daemonsu -->SafetyNet
+               SafetyNet --> Api
+               Api : Attestation
+               Api : Safe Browsing
+               Api : reCAPTCHA
+               Api : Verify Apps
+               Sulinux *-- User
+               User --> Role
+               Role --> Domain
+               Domain *--o File
+
+               debug-->adb
+               debug-->server
+               adb-->shell
+
+               su-->user
+               user<-->group
+
+               root-->device
+               root-->su
+
+               Sulinux --|>Supolicy 
+
+                
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/7.1.2/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+    </body>
+</html>

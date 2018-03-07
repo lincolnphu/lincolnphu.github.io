@@ -19,36 +19,49 @@
                varifiedBoot: Device state
                varifiedBoot: dm-verity
                varifiedBoot: OEM key
-               
                varifiedBoot-->device
                root --> su
+               su: permissive mode 
+
                device --> recovery
                device --> bootloader
                device --> debug
+
                daemonsu -->SafetyNet
+
+               daemonsu : initialize(初始化)
                SafetyNet --> Api
+
                Api : Attestation
                Api : Safe Browsing
                Api : reCAPTCHA
                Api : Verify Apps
+
                Sulinux *-- User
                User --> Role
                Role --> Domain
                Domain *--o File
+
 
                debug-->adb
                debug-->server
                adb-->shell
 
                su-->User
+
                group<-->User
 
                root-->device
+
                root-->su
+
+               device-->charger
+
+               device-->partition
 
                Sulinux --|>Supolicy 
 
-                
+
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/7.1.2/mermaid.min.js"></script>

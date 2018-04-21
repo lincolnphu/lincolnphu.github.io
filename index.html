@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+          <meta charset="utf-8">
+    </head>
+    <body>
+          <div class="mermaid">
+              classDiagram
+              NetControl <|-- DNS : request kernel cache
+               Android boinic--> linux gblic
+               kernel <--> standard library
+               kernel --> Android boinic
+               kernel --> linuxglibc
+               boinic --> netresolv
+               NetControl : AndroidVersion: 7
+               NetControl : AndroidVersion: 4.4
+               linux-->iptables
+               freebsd-->ipfw
+               linux-->kernel
+               freebsd-->kernel
+               DNS-->kernel
+               kernel *--o system
+               system-->ota
+               ipset --|>dns
+               ipset -->iptables 
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/7.1.2/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<div>
+  <p>ipset:在bsd不能用，在安卓能用 </p>
+  <p>server=/qq.com/dns</p>
+  <p>address=/qq.com/ipsetname</p>
+  <p>dnsmasq:无法修改android的dns缓存控制，需要修改netd放权</p>
+</div>
+    </body>
+  </html>

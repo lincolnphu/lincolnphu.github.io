@@ -3,7 +3,7 @@
  * GFWList Last-Modified: 2018-09-23 05:21:47
  */
 
-var proxy = 'https 119.123.245.189:2090';
+var proxy = 'PROXY 119.123.245.189:2090';
 var rules = [
     [
         [],

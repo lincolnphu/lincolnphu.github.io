@@ -1,155 +1,304 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <title>Title</title>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
+    <title>Slide with remark.js</title>
     <style>
-      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
-      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
-      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+/* font settings */
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+@import url(https://fonts.googleapis.com/css?family=Roboto+Noto);
+body, h1, h2, h3 {font-family: 'Roboto';}
+h1, h2, h3 {font-weight: normal; font-weight: 400; margin-bottom: 0;}
+.remark-code, .remark-inline-code { font-family: 'Roboto Mono'; }
 
-      body { font-family: 'Droid Serif'; }
-      h1, h2, h3 {
-        font-family: 'Yanone Kaffeesatz';
-        font-weight: normal;
-      }
-      span.red {
-        background-color:#A4375B;
-      }
-      span.yellow {
-        background-color:#3EA9BB;
-      }
-      span.start {
-        background-color:#E8CFBA;
-      }
-      span.back {
-        background-color:#772D86;
-      }
-      span.hight {
-        background-color:#A8384D;
-      }
-      .remark-code, .remark-inline-code { font-family: 'Yanone Kaffeesatz'; }
+/* theme class for slide pages */
+.inverse {
+  background: hsl(0, 0%, 15%);
+  color: hsl(0, 5%, 75%);
+}
+.inverse h1 {
+  text-align: center;
+  color: hsl(0, 5%, 95%);
+  line-height: 0.8em;
+}
+.inverse h2 {
+  color: hsl(0, 5%, 90%);
+  line-height: 0.8em;
+}
+.inverse a {
+  color: hsl(330, 75%, 50%);
+  text-decoration: none;
+}
+.inverse code {
+  color: hsl(330, 75%, 100%);
+}
+
+/* custom styles for inline span notation */
+span.red {color: hsl(0, 90%, 50%);}
+
+/* print filling whole paper */
+@media print {
+  .remark-slide-scaler {
+    left: 5vw !important;
+    width: 90vw !important;
+    top: 5vh !important;
+    height: 90vh !important;
+    transform: scale(1) !important;
+  }
+}
     </style>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://dagrejs.github.io/project/dagre-d3/latest/dagre-d3.js"></script>
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="https://dagrejs.github.io/project/dagre-d3/latest/demo/tipsy.js"></script>
+<style>
+.tipsy { font-size: 10px; position: absolute; padding: 5px; z-index: 100000; }
+  .tipsy-inner { background-color: #000; color: #FFF; max-width: 200px; padding: 5px 8px 4px 8px; text-align: center; }
+  /* Rounded corners */
+  .tipsy-inner { border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
+
+  /* Uncomment for shadow */
+  .tipsy-inner { box-shadow: 0 0 5px #000000; -webkit-box-shadow: 0 0 5px #000000; -moz-box-shadow: 0 0 5px #000000; }
+
+  .tipsy-arrow { position: absolute; width: 0; height: 0; line-height: 0; border: 5px dashed #000; }
+
+  /* Rules to colour arrows */
+  .tipsy-arrow-n { border-bottom-color: #000; }
+  .tipsy-arrow-s { border-top-color: #000; }
+  .tipsy-arrow-e { border-left-color: #000; }
+  .tipsy-arrow-w { border-right-color: #000; }
+
+	.tipsy-n .tipsy-arrow { top: 0px; left: 50%; margin-left: -5px; border-bottom-style: solid; border-top: none; border-left-color: transparent; border-right-color: transparent; }
+    .tipsy-nw .tipsy-arrow { top: 0; left: 10px; border-bottom-style: solid; border-top: none; border-left-color: transparent; border-right-color: transparent;}
+    .tipsy-ne .tipsy-arrow { top: 0; right: 10px; border-bottom-style: solid; border-top: none;  border-left-color: transparent; border-right-color: transparent;}
+  .tipsy-s .tipsy-arrow { bottom: 0; left: 50%; margin-left: -5px; border-top-style: solid; border-bottom: none;  border-left-color: transparent; border-right-color: transparent; }
+    .tipsy-sw .tipsy-arrow { bottom: 0; left: 10px; border-top-style: solid; border-bottom: none;  border-left-color: transparent; border-right-color: transparent; }
+    .tipsy-se .tipsy-arrow { bottom: 0; right: 10px; border-top-style: solid; border-bottom: none; border-left-color: transparent; border-right-color: transparent; }
+  .tipsy-e .tipsy-arrow { right: 0; top: 50%; margin-top: -5px; border-left-style: solid; border-right: none; border-top-color: transparent; border-bottom-color: transparent; }
+  .tipsy-w .tipsy-arrow { left: 0; top: 50%; margin-top: -5px; border-right-style: solid; border-left: none; border-top-color: transparent; border-bottom-color: transparent; }
+g.type-TK > rect {
+  fill: #00ffd0;
+}
+text {
+  font-weight: 300;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serf;
+  font-size: 14px;
+}
+.node rect {
+  stroke: #999;
+  fill: #fff;
+  stroke-width: 1.5px;
+}
+.edgePath path {
+  stroke: #333;
+  stroke-width: 1.5px;
+}
+.tipsy .name {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #60b1fc;
+  margin: 0;
+}
+/* This styles the body of the tooltip */
+.tipsy .description {
+  font-size: 1.2em;
+}
+</style>
   </head>
   <body>
     <textarea id="source">
-
-class: center, middle
-
-# Rxjava_study
-
+class: inverse
+layout: true
 ---
-#Upstream
-
-```javascript
-source.operator1().operator2().operator3().subscribe(consumer);
-```
-**operator1.start[<]-operator2** // looking to .hight[left] // 指向.hight[左边]</br>
-```javascript
-source.flatMap(value -> source.operator1().operator2().operator3());
-```
-<u> if we imagine ourselves on .yellow[operator2], looking to the left towards the .yellow[source], is called the .red[upstream]</u><br/>
-<u>以.yellow[operator2]箭头指向operator1最终针对.yellow[source], 这个过程叫.red[upstream]</u>
----
-#Downstream
-```javascript
-source.operator1().operator2().operator3().subscribe(consumer);
-```
-**operator1-.back[>]operator2** // looking to .hight[right] // 指向.hight[右边]</br>
-```javascript
-source.flatMap(value -> source.operator1().operator2().operator3());
-```
-<u>Looking to the right towards the .yellow[subscriber/consumer], is called the .red[downstream].</u><br/>
-<u>以.yellow[operator1]箭头指向operator2最终针对.yellow[subscriber/consumer], 这个过程叫.red[downstream]</u>
-
----
-#Induction
-**rxjava:<u> source looking to cosumer/subscriber</u>**
-
----
-#Backpressure
+# Other features
 ```java
-public class ComputeFunction {
 
 
-
-
-
-
-
-
+public class HelloWorld {
+ //创建一个类
 }
+
 ```
-**create ComputeFunction class //创建一个超集ComputeFunction
+<div class="mermaid">
+graph LR;
+  Class
+</div>
 ---
-#Backpressure
+# Other features
 ```java
-public class ComputeFunction {
-    public static void compute(Integer v) {
 
 
-
-
-
-
+public class HelloWorld {
+    public static void main(String[] args) {
+      //创建一个主入口方法
     }
 }
 ```
-**create compute method(function) //创建一个方法(函数):compute
+<div class="mermaid">
+graph LR;
+Class --> main;
+</div>
 ---
-#Backpressure
+# Other features
 ```java
-public class ComputeFunction {
-    public static void compute(Integer v) {
-        try {
-            System.out.println("compute integer v: " + v);
-            Thread.sleep(1000);
-        }
+import io.reactivex.*;//Flowable 触发调用的相应式库
 
-
+public class HelloWorld {
+    public static void main(String[] args) {
+        Flowable//针对backpressure(大量数据或者多线程而设定的)
     }
 }
 ```
-**normal situation // 正常情况
+<div class="mermaid">
+graph LR;
+Class --> main;
+main  --> Flowable;
+</div>
+
 ---
-#Backpressure
+# Other features
 ```java
-public class ComputeFunction {
-    public static void compute(Integer v) {
+import io.reactivex.*;
 
-
-
-          catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+public class HelloWorld {
+    public static void main(String[] args) {
+        Flowable.just("Hello world")//just()触发"Hello world"直接显示在显示屏上
     }
 }
 ```
-**error situation // 出现错误的情况
+<div class="mermaid">
+graph LR;
+Class --> main;
+main --> Flowable;
+Flowable --> just;
+</div>
+
 ---
-#Backpressure
+# Other features
 ```java
-public class ComputeFunction {
-    public static void compute(Integer v) {
-        try {
-            System.out.println("compute integer v: " + v);
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+import io.reactivex.*;
+
+public class HelloWorld {
+    public static void main(String[] args) {
+        Flowable.just("Hello world").subscribe(System.out::println);
+        //subscribe()  触发响应式reactive运行，之前的Flowable到just只是准备工作
     }
 }
 ```
-**backpress is we are doing it to emulate(compute) some long running task that will cause Observable **<br>
-**to fill up with items quicker that Observer can consume them** <br>
-//我们在处理大量数据的时候，会让机器的cpu处理不过来！
+<div class="mermaid">
+graph LR;
+  Class --> main;
+  main --> Flowable;
+  Flowable --> just;
+  just --> subscribe;
+</div>
 
+---
+# Other features
+```java
+import io.reactivex.*;
 
-    </textarea>
-    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
-    </script>
+public class HelloWorld {
+    public static void main(String[] args) {
+        Flowable.just("Hello world").subscribe(System.out::println);
+    }
+}
+```
+<div class="mermaid">
+graph LR;
+  Class --> main;
+  main  --> Flowable;
+  Flowable --> just;
+  just --> subscribe;
+</div>
+
+```bash
+print Hello world //运行代码，直接显示结果
+```
+
+</textarea>
+
+    <!-- remark.js -->
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+
+    <!-- option: katex -->
+    <script src="https://unpkg.com/katex/dist/katex.min.js"></script>
+    <script src="https://unpkg.com/katex/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/katex/dist/katex.min.css" />
+
+    <!-- option: mermaid -->
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <style>
+.inverse div.mermaid {
+  background-color: hsl(0, 5%, 75%);
+}
+    </style>
+    
+    <!-- init slide -->
     <script>
-      var slideshow = remark.create();
+const slideshow = remark.create({
+  highlightStyle: "github", // highlight.js theme
+}, () => {
+  // KaTeX sessting
+  renderMathInElement(document.body, {delimiters: [
+    {left: "$$", right: "$$", display: true},
+    {left: "$", right: "$", display: false},
+  ]});
+});
+
+// valid rendering mermaid graphs on chrome
+// note for print: once open page before print
+mermaid.initialize({startOnLoad: false, cloneCssStyles: false});
+slideshow.on("afterShowSlide", s => {
+  for (const d of document.querySelectorAll("div.mermaid")) {
+    if (d.offsetWidth > 0) mermaid.init(undefined, d);
+  }
+});
     </script>
+    	<script>
+		var g = new dagreD3.graphlib.Graph()
+  .setGraph({})
+  .setDefaultEdgeLabel(function() { return {}; });
+// Here we"re setting nodeclass, which is used by our custom drawNodes function
+// below.
+g.setNode(0,  { label: "TOP",  description: "represents no connection state at all.",     class: "type-TOP" });
+g.setNode(1,  { label: "S",    description: "represents no connection state at all.",     class: "type-S" });
+g.setNode(2,  { label: "NP",  description: "represents no connection state at all.",      class: "type-NP" });
+g.setNode(3,  { label: "DT",  description: "represents no connection state at all.",      class: "type-DT" });
+g.setNode(4,  { label: "This",  description: "represents no connection state at all.",    class: "type-TK" });
+
+g.nodes().forEach(function(v) {
+
+  var node = g.node(v);
+  // Round the corners of the nodes
+  node.rx = node.ry = 5;
+})
+// Set up edges, no special attributes.
+g.setEdge(3, 4);
+g.setEdge(2, 3);
+g.setEdge(1, 3);
+g.setEdge(0, 1)
+// Create the renderer
+var render = new dagreD3.render();
+// Set up an SVG group so that we can translate the final graph.
+var svg = d3.select("svg"),
+    svgGroup = svg.append("g");
+// Run the renderer. This is what draws the final graph.
+render(d3.select("svg g"), g);
+// Center the graph
+var xCenterOffset = (svg.attr("width") - g.graph().width) / 2;
+svgGroup.attr("transform", "translate(" + xCenterOffset + ", 20)");
+svg.attr("height", g.graph().height + 40);
+var styleTooltip = function(name, description) {
+  return "<p class='name'>" + name + "</p><p class='description'>" + description + "</p>";
+};
+svgGroup.selectAll("g.node")
+  .attr("title", function(v) {
+  	console.log(g.node(v).description)
+  	return styleTooltip(v, g.node(v).description) })
+  .each(function(v) { $(this).tipsy({ gravity: "w", opacity: 1, html: true }); });
+	</script>
   </body>
 </html>
+
+

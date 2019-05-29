@@ -1,0 +1,232 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>wpf</title><link href='https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; tab-size: 4; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 40px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write li > figure:first-child { margin-top: -20px; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; }
+button, input, select, textarea { color: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 2; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px !important; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  html.blink-to-pdf { font-size: 13px; }
+  .typora-export #write { padding-left: 32px; padding-right: 32px; padding-bottom: 0px; break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  @page { margin: 20mm 0px; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.md-inline-math .MathJax_SVG .noError { display: none !important; }
+.html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
+.md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
+.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
+.MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
+.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG * { transition: none; }
+.MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="mermaid"] svg, [lang="flow"] svg { max-width: 100%; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+
+
+:root { --side-bar-bg-color: #fafafa; --control-text-color: #777; }
+html { font-size: 16px; }
+body { font-family: "Open Sans", "Clear Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; color: rgb(51, 51, 51); line-height: 1.6; }
+#write { max-width: 860px; margin: 0px auto; padding: 30px 30px 100px; }
+#write > ul:first-child, #write > ol:first-child { margin-top: 30px; }
+a { color: rgb(65, 131, 196); }
+h1, h2, h3, h4, h5, h6 { position: relative; margin-top: 1rem; margin-bottom: 1rem; font-weight: bold; line-height: 1.4; cursor: text; }
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor { text-decoration: none; }
+h1 tt, h1 code { font-size: inherit; }
+h2 tt, h2 code { font-size: inherit; }
+h3 tt, h3 code { font-size: inherit; }
+h4 tt, h4 code { font-size: inherit; }
+h5 tt, h5 code { font-size: inherit; }
+h6 tt, h6 code { font-size: inherit; }
+h1 { padding-bottom: 0.3em; font-size: 2.25em; line-height: 1.2; border-bottom: 1px solid rgb(238, 238, 238); }
+h2 { padding-bottom: 0.3em; font-size: 1.75em; line-height: 1.225; border-bottom: 1px solid rgb(238, 238, 238); }
+h3 { font-size: 1.5em; line-height: 1.43; }
+h4 { font-size: 1.25em; }
+h5 { font-size: 1em; }
+h6 { font-size: 1em; color: rgb(119, 119, 119); }
+p, blockquote, ul, ol, dl, table { margin: 0.8em 0px; }
+li > ol, li > ul { margin: 0px; }
+hr { height: 2px; padding: 0px; margin: 16px 0px; background-color: rgb(231, 231, 231); border: 0px none; overflow: hidden; box-sizing: content-box; }
+li p.first { display: inline-block; }
+ul, ol { padding-left: 30px; }
+ul:first-child, ol:first-child { margin-top: 0px; }
+ul:last-child, ol:last-child { margin-bottom: 0px; }
+blockquote { border-left: 4px solid rgb(223, 226, 229); padding: 0px 15px; color: rgb(119, 119, 119); }
+blockquote blockquote { padding-right: 0px; }
+table { padding: 0px; word-break: initial; }
+table tr { border-top: 1px solid rgb(223, 226, 229); margin: 0px; padding: 0px; }
+table tr:nth-child(2n), thead { background-color: rgb(248, 248, 248); }
+table tr th { font-weight: bold; border-width: 1px 1px 0px; border-top-style: solid; border-right-style: solid; border-left-style: solid; border-top-color: rgb(223, 226, 229); border-right-color: rgb(223, 226, 229); border-left-color: rgb(223, 226, 229); border-image: initial; border-bottom-style: initial; border-bottom-color: initial; text-align: left; margin: 0px; padding: 6px 13px; }
+table tr td { border: 1px solid rgb(223, 226, 229); text-align: left; margin: 0px; padding: 6px 13px; }
+table tr th:first-child, table tr td:first-child { margin-top: 0px; }
+table tr th:last-child, table tr td:last-child { margin-bottom: 0px; }
+.CodeMirror-lines { padding-left: 4px; }
+.code-tooltip { box-shadow: rgba(0, 28, 36, 0.3) 0px 1px 1px 0px; border-top: 1px solid rgb(238, 242, 242); }
+.md-fences, code, tt { border: 1px solid rgb(231, 234, 237); background-color: rgb(248, 248, 248); border-radius: 3px; padding: 2px 4px 0px; font-size: 0.9em; }
+code { background-color: rgb(243, 244, 244); padding: 0px 2px; }
+.md-fences { margin-bottom: 15px; margin-top: 15px; padding-top: 8px; padding-bottom: 6px; }
+.md-task-list-item > input { margin-left: -1.3em; }
+@media print {
+  html { font-size: 13px; }
+  table, pre { break-inside: avoid; }
+  pre { word-wrap: break-word; }
+}
+.md-fences { background-color: rgb(248, 248, 248); }
+#write pre.md-meta-block { padding: 1rem; font-size: 85%; line-height: 1.45; background-color: rgb(247, 247, 247); border: 0px; border-radius: 3px; color: rgb(119, 119, 119); margin-top: 0px !important; }
+.mathjax-block > .code-tooltip { bottom: 0.375rem; }
+.md-mathjax-midline { background: rgb(250, 250, 250); }
+#write > h3.md-focus::before { left: -1.5625rem; top: 0.375rem; }
+#write > h4.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+#write > h5.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+#write > h6.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+.md-image > .md-meta { border-radius: 3px; padding: 2px 0px 0px 4px; font-size: 0.9em; color: inherit; }
+.md-tag { color: rgb(167, 167, 167); opacity: 1; }
+.md-toc { margin-top: 20px; padding-bottom: 20px; }
+.sidebar-tabs { border-bottom: none; }
+#typora-quick-open { border: 1px solid rgb(221, 221, 221); background-color: rgb(248, 248, 248); }
+#typora-quick-open-item { background-color: rgb(250, 250, 250); border-color: rgb(254, 254, 254) rgb(229, 229, 229) rgb(229, 229, 229) rgb(238, 238, 238); border-style: solid; border-width: 1px; }
+.on-focus-mode blockquote { border-left-color: rgba(85, 85, 85, 0.12); }
+header, .context-menu, .megamenu-content, footer { font-family: "Segoe UI", Arial, sans-serif; }
+.file-node-content:hover .file-node-icon, .file-node-content:hover .file-node-open-state { visibility: visible; }
+.mac-seamless-mode #typora-sidebar { background-color: var(--side-bar-bg-color); }
+.md-lang { color: rgb(180, 101, 77); }
+.html-for-mac .context-menu { --item-hover-bg-color: #E6F0FE; }
+#md-notification .btn { border: 0px; }
+.dropdown-menu .divider { border-color: rgb(229, 229, 229); }
+
+
+
+
+
+ .typora-export li, .typora-export p, .typora-export,  .footnote-line {white-space: normal;} 
+</style>
+</head>
+<body class='typora-export os-windows' >
+<div  id='write'  class = 'is-node'><p>1 Dependency Properties</p><p>2 Routed Events</p><figure><table><thead><tr><th>Routed Events</th><th>Driect Event</th><th>Bubbling Event</th><th>Tunnel Event</th></tr></thead><tbody><tr><td>&nbsp;</td><td>A direct event is similar to events in Windows forms which are raised by the element in which the event is originated.</td><td>A bubbling event begins with the element where the event is originated.</td><td>Event handlers on the element tree root are invoked and then the event travels down the visual tree to all the children nodes until it reaches the element in which the event originated.</td></tr></tbody></table></figure><p>3 controls</p><figure><table><thead><tr><th>controls</th><th>images</th><th>Description</th></tr></thead><tbody><tr><td><a href='https://www.tutorialspoint.com/wpf/wpf_buttons.htm'>Button</a></td><td><img src='https://www.tutorialspoint.com/wpf/images/output_of_button.jpg' alt='output of Button Class' referrerPolicy='no-referrer' /></td><td>A control that responds to user input</td></tr><tr><td><a href='https://www.tutorialspoint.com/wpf/wpf_calendar.htm'>Calendar</a></td><td><img src='https://www.tutorialspoint.com/wpf/images/select_date.jpg' alt='Select Date' referrerPolicy='no-referrer' /></td><td>Represents a control that <br>enables a user to select a date by using <br>a visual calendar display</td></tr><tr><td><a href='https://www.tutorialspoint.com/wpf/wpf_checkbox.htm'>CheckBox</a></td><td><img src='https://www.tutorialspoint.com/wpf/images/check_box.jpg' alt='checkbox' referrerPolicy='no-referrer' /></td><td>A control that a user can select or clear.</td></tr><tr><td><a href='https://www.tutorialspoint.com/wpf/wpf_combobox.htm'>ComboBox</a></td><td><img src="https://www.tutorialspoint.com/wpf/images/select_an_item.jpg" height="300" width="300"></td><td>A drop-down list of items a user can select from.</td></tr><tr><td><a href='https://www.tutorialspoint.com/wpf/wpf_contextmenu.htm'>ContextMenu</a></td><td><img src="https://www.tutorialspoint.com/wpf/images/output_of_contextmenu.jpg" width="400" height="300" ></td><td>Gets or sets the context <br>menu element that should<br> appear whenever the context<br> menu is requested <br>through user interface (UI) from<br> within this element.</td></tr><tr><td><a href='https://www.tutorialspoint.com/wpf/wpf_datagrid.htm'>DataGrid</a></td><td><img src="https://www.tutorialspoint.com/wpf/images/output_of_datagrid.jpg" width="400" heigh="300"></td><td>Represents a control that <br>displays data in a customizable grid.</td></tr><tr><td><a href='https://www.tutorialspoint.com/wpf/wpf_datepicker.htm'>DatePicker</a></td><td><img src="https://www.tutorialspoint.com/wpf/images/output_of_datepicker.jpg" width="400" height="300" ></td><td>A control that lets a user select a date.</td></tr><tr><td><a href='https://www.tutorialspoint.com/wpf/wpf_dialog_box.htm'>Dialogs</a></td><td><img src="https://www.tutorialspoint.com/wpf/images/clicks_the_button.jpg" height="300" height="180"></td><td>An application may also<br> display additional windows<br> to help the user gather<br> or display important information</td></tr><tr><td><a href='https://www.tutorialspoint.com/wpf/wpf_gridview.htm'>GridView</a></td><td><img src="https://www.tutorialspoint.com/wpf/images/output_of_gridview.jpg" height="250" width="400" ></td><td>A control that presents<br> a collection of items in rows<br> and columns that<br> can scroll horizontally.</td></tr><tr><td><a href='https://www.tutorialspoint.com/wpf/wpf_image.htm'>Image</a></td><td><img src='https://www.tutorialspoint.com/wpf/images/output_of_image.jpg' alt='Output of Image' referrerPolicy='no-referrer' /></td><td>A control that presents an image.</td></tr><tr><td><a href='https://www.tutorialspoint.com/wpf/wpf_label.htm'>Label</a></td><td><img src='https://www.tutorialspoint.com/wpf/images/output_of_label.jpg' alt='Output of label' referrerPolicy='no-referrer' /></td><td>Displays text on a form. <br>Provides support for access keys.</td></tr><tr><td><a href='https://www.tutorialspoint.com/wpf/wpf_listbox.htm'>ListBox</a></td><td><img src='https://www.tutorialspoint.com/wpf/images/output_of_listbox.jpg' alt='Output of Listbox' referrerPolicy='no-referrer' /></td><td>A control that presents<br> an inline list of items <br>that the user can select from.</td></tr><tr><td><a href='https://www.tutorialspoint.com/wpf/wpf_menu.htm'>Menus</a></td><td><img src='https://www.tutorialspoint.com/wpf/images/output_of_menu.jpg' alt='Output of Menu' referrerPolicy='no-referrer' /></td><td>Represents a Windows menu <br>control that enables you to<br> hierarchically organize elements associated <br>with commands and event handlers.</td></tr><tr><td><a href='https://www.tutorialspoint.com/wpf/wpf_passwordbox.htm'>PasswordBox</a></td><td><img src='https://www.tutorialspoint.com/wpf/images/output_of_passwordbox.jpg' alt='Output of Passwordbox' referrerPolicy='no-referrer' /></td><td>A control for entering passwords</td></tr><tr><td><a href='https://www.tutorialspoint.com/wpf/wpf_popup.htm'>Popup</a></td><td><img src='https://www.tutorialspoint.com/wpf/images/output_of_popup.jpg' alt='Output of Popup' referrerPolicy='no-referrer' /></td><td>Displays content on top <br>of existing content, within the bounds of the <br>application window.</td></tr><tr><td><a href='https://www.tutorialspoint.com/wpf/wpf_progressbar.htm'>ProgressBar</a></td><td><img src='https://www.tutorialspoint.com/wpf/images/output_of_progressbar.jpg' alt='Output of Progressbar' referrerPolicy='no-referrer' /></td><td>A control that indicates <br>progress by displaying a bar.</td></tr><tr><td><a href='https://www.tutorialspoint.com/wpf/wpf_radiobutton.htm'>RadioButton</a></td><td><img src='https://www.tutorialspoint.com/wpf/images/output_of_radiobutton.jpg' alt='Output of Radiobutton' referrerPolicy='no-referrer' /></td><td>A control that allows a user<br> to select a single option<br> from a group of options.</td></tr><tr><td><a href='https://www.tutorialspoint.com/wpf/wpf_scrollviewer.htm'>ScrollViewer</a></td><td><img src='https://www.tutorialspoint.com/wpf/images/output_of_scrollviewer.jpg' alt='Output of Scrollviewer' referrerPolicy='no-referrer' /></td><td>A container control that<br> lets the user pan and zoom its content.</td></tr><tr><td><a href='https://www.tutorialspoint.com/wpf/wpf_slider.htm'>Slider</a></td><td><img src='https://www.tutorialspoint.com/wpf/images/output_of_slider.jpg' alt='Output of Slider' referrerPolicy='no-referrer' /></td><td>A control that lets the<br> user select from a range<br> of values by moving a Thumb control along a track.</td></tr><tr><td><a href='https://www.tutorialspoint.com/wpf/wpf_textblock.htm'>TextBlock</a></td><td><img src='https://www.tutorialspoint.com/wpf/images/output_of_textblock.jpg' alt='Output of Textblock' referrerPolicy='no-referrer' /></td><td>A control that displays text.</td></tr><tr><td><a href='https://www.tutorialspoint.com/wpf/wpf_togglebutton.htm'>ToggleButton</a></td><td><img src='https://www.tutorialspoint.com/wpf/images/output_of_togglebutton.jpg' alt='Output of Togglebutton' referrerPolicy='no-referrer' /></td><td>A button that can<br> be toggled between 2 states.</td></tr><tr><td><a href='https://www.tutorialspoint.com/wpf/wpf_tooltip.htm'>ToolTip</a></td><td><img src='https://www.tutorialspoint.com/wpf/images/output_of_tooltip.jpg' alt='Output of Tooltip' referrerPolicy='no-referrer' /></td><td>A pop-up window that displays information for an element</td></tr><tr><td><a href='https://www.tutorialspoint.com/wpf/wpf_window.htm'>Window</a></td><td><img src='https://www.tutorialspoint.com/wpf/images/output_of_window.jpg' alt='Output of Window' referrerPolicy='no-referrer' /></td><td>The root window which provides <br>minimize/maximize option, <br>Title bar, border and close button</td></tr><tr><td><a href='https://www.tutorialspoint.com/wpf/wpf_third_party_controls.htm'>3rd Party Controls</a></td><td><img src='https://www.tutorialspoint.com/wpf/images/calculator.jpg' alt='Calculator' referrerPolicy='no-referrer' /></td><td>Use third-party <br>controls in your WPF <br>applications.</td></tr><tr><td><a href='https://www.wpf-tutorial.com/tabcontrol/using-the-tabcontrol/'>TabControl</a></td><td><img src='https://www.wpf-tutorial.com/Images/ArticleImages/1/chapters/tabcontrol/tabcontrol_simple.png' alt='img' referrerPolicy='no-referrer' /></td><td><img src='https://www.wpf-tutorial.com/Images/ArticleImages/1/chapters/tabcontrol/tabcontrol_custom_headers.png' alt='img' referrerPolicy='no-referrer' /></td></tr></tbody></table></figure><figure><table><thead><tr><th>sr.no</th><th>Panels</th><th>Description</th><th>images</th></tr></thead><tbody><tr><td>1</td><td><a href='https://www.tutorialspoint.com/wpf/wpf_stackpanel.htm'>Stack Panel</a></td><td>Stack panel is a simple and<br> useful layout panel in XAML.<br> In stack panel, child elements<br> can be arranged in a single line,<br> either horizontally or vertically, <br>based on the orientation property.</td><td><img src='https://www.tutorialspoint.com/wpf/images/output_of_stackpanel.jpg' alt='Output of Stackpanel' referrerPolicy='no-referrer' /></td></tr><tr><td>2</td><td><a href='https://www.tutorialspoint.com/wpf/wpf_wrappanel.htm'>Wrap Panel</a></td><td>In WrapPanel, child elements are <br>positioned in sequential order, from<br> left to right or from top to bottom <br>based on the orientation property.</td><td><img src='https://www.tutorialspoint.com/wpf/images/output_of_wrappanel.jpg' alt='Output of Wrappanel' referrerPolicy='no-referrer' /></td></tr><tr><td>3</td><td><a href='https://www.tutorialspoint.com/wpf/wpf_dockpanel.htm'>Dock Panel</a></td><td>DockPanel defines an area to arrange <br>child elements relative to each other,<br> either horizontally or vertically. <br>With DockPanel you can easily dock <br>child elements to top, bottom, <br>right, left and center using the <br><strong>Dock</strong> property.</td><td><img src='https://www.tutorialspoint.com/wpf/images/output_of_dockpanel.jpg' alt='Output of Dockpanel' referrerPolicy='no-referrer' /></td></tr><tr><td>4</td><td><a href='https://www.tutorialspoint.com/wpf/wpf_canvaspanel.htm'>Canvas Panel</a></td><td>Canvas panel is the basic layout panel <br>in which the child elements<br> can be positioned explicitly <br>using coordinates that<br> are relative to the <strong>Canvas</strong> <br>any side such as left, right, <br>top and bottom.</td><td><img src='https://www.tutorialspoint.com/wpf/images/output_of_canvaspanel.jpg' alt='Output of Canvaspanel' referrerPolicy='no-referrer' /></td></tr><tr><td>5</td><td><a href='https://www.tutorialspoint.com/wpf/wpf_gridpanel.htm'>Grid Panel</a></td><td>A Grid Panel provides a flexible<br> area which consists of rows <br>and columns. In a Grid, child elements can be arranged in <br>tabular form.</td><td><img src='https://www.tutorialspoint.com/wpf/images/output_of_gridpanel.jpg' alt='Output of Gridpanel' referrerPolicy='no-referrer' /></td></tr><tr><td>&nbsp;</td><td><a href='https://www.tutorialspoint.com/wpf/wpf_nesting_of_layout.htm'>Nesting of Layout</a></td><td>&nbsp;</td><td><img src='https://www.tutorialspoint.com/wpf/images/output_of_nesting_of_layouts.jpg' alt='Output of Nesting of Layouts' referrerPolicy='no-referrer' /></td></tr></tbody></table></figure><figure><table><thead><tr><th>Sr.No.</th><th><strong>Inputs</strong></th><th><strong>Description</strong></th><th><strong>Images</strong></th></tr></thead><tbody><tr><td>1</td><td><a href='https://www.tutorialspoint.com/wpf/wpf_mouse.htm'>Mouse</a></td><td>There are different types of mouse<br> inputs such as MouseDown, <br>MouseEnter, MouseLeave, etc.</td><td><img src='https://www.tutorialspoint.com/wpf/images/mouse_enters_inside_rectangle.jpg' alt='Mouse enters inside rectangle' referrerPolicy='no-referrer' /></td></tr><tr><td>2</td><td><a href='https://www.tutorialspoint.com/wpf/wpf_keyboard.htm'>Keyboard</a></td><td>There are many types of <br>keyboard inputs such as KeyDown, KeyUp,<br> TextInput, etc.</td><td><img src='https://www.tutorialspoint.com/wpf/images/output_of_keyword.jpg' alt='Output of Keyword' referrerPolicy='no-referrer' /></td></tr><tr><td>3</td><td><a href='https://www.tutorialspoint.com/wpf/wpf_routed_commands.htm'>ContextMenu or RoutedCommands</a></td><td>RoutedCommands enable <br>input handling at a more<br> semantic level.<br> These are actually simple instructions as New,<br> Open, Copy, Cut, and Save.</td><td><img src='https://www.tutorialspoint.com/wpf/images/output_of_routed_commands.jpg' alt='output of the Routed Commands' referrerPolicy='no-referrer' /></td></tr><tr><td>4</td><td><a href='https://www.tutorialspoint.com/wpf/wpf_multi_touch.htm'>Multi Touch</a></td><td>Windows 7 and its higher <br>versions have the ability to <br>receive input from multiple touchsensitive devices. WPF applications<br> can also handle touch <br>input as other input, <br>such as the mouse or <br>keyboard, by raising<br> events when a touch occurs.</td><td><img src='https://www.tutorialspoint.com/wpf/images/output_of_multi_touch.jpg' alt='Output of the Multitouch' referrerPolicy='no-referrer' /></td></tr></tbody></table></figure><p>&nbsp;</p></div>
+</body>
+</html>
